@@ -12,3 +12,6 @@ Automated scripting to facilitate converting original PlayStation save games bet
 
 ### Why develop this?
 Previous save game translators like MemCardRex focus primarily on Windows systems. I want a more universal application, so this will focus on a Python graphical application that is platform-agnostic.
+
+## Project Sources
+-- [PS3 Wiki -- PS1 Savedata](https://www.psdevwiki.com/ps3/PS1_Savedata)
