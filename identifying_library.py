@@ -11,6 +11,20 @@ def f_identifyFile(file_data):
     PS1_STANDARD_MC_LEN = 128*1024 #Standard PS1 memory card is 128 KB long
     PSP_MC_LEN = 129*1024   #Length of the PSP memory card files
 
+    #Basis of PSX MC detection
+    if len(file_data) == PS1_STANDARD_MC_LEN:
+        #PS1 memory cards have to start with "MC"
+        if file_data[0x0:0x2] == MC_MAGIC:
+            None
+    #Basis of PSP MC detection
+    elif len(file_data) == PSP_MC_LEN:
+        None
+    #Assume single save detection
+    else:
+        #Single saves have to start with the 'SC' magic data
+        if file_data[0x0:0x2] == SC_MAGIC:
+            None
+
     return file_type
 
 def tester():
