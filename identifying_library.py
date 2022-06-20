@@ -1,9 +1,33 @@
+import os
+
 #Param(s):
 #   file_data: binary info from the file as a single continuous 'bytes'.
 #Returns 'PSP' if identified as PSP, 'single' if identified as a single save file,
 #  and 'memCard' if identified as a PS1 memory card save
 def f_identifyFile(file_data):
+    file_type = None    #returned file data type
     MC_MAGIC = b'MC' #magic bit that starts a PS1 memory card
     SC_MAGIC = b'SC'
     PS1_STANDARD_MC_LEN = 128*1024 #Standard PS1 memory card is 128 KB long
     PSP_MC_LEN = 129*1024   #Length of the PSP memory card files
+
+    return file_type
+
+def tester():
+    #Replace game save file paths as necessary.
+    RETROARCH_MC_PATH = "Ace_Combat_3_Nemo.srm"
+    retroarch_mc_data = open(RETROARCH_MC_PATH,'rb').read()
+    PSX_SINGLE_SAVE_PATH = "BISLPSP02020AC3ES_MC"
+    psx_single_save_data = open(PSX_SINGLE_SAVE_PATH,'rb').read()
+    print(len(retroarch_mc_data)/1024)
+
+    #Test identifying file with data from each type of savegame.
+    retroarch_mc_file_type = f_identifyFile(retroarch_mc_data)
+    if retroarch_mc_file_type != 'memCard':
+        raise Exception('file type should be memCard, not {}'.format(retroarch_mc_file_type))
+    psx_single_save_file_type = f_identifyFile(psx_single_save_data)
+    if psx_single_save_file_type != 'single':
+        raise Exception('file type should be single, not {}'.format(psx_single_save_file_type))
+
+if __name__ == '__main__':
+    tester()
