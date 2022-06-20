@@ -6,8 +6,9 @@ import os
 #  and 'memCard' if identified as a PS1 memory card save
 def f_identifyFile(file_data):
     file_type = None    #returned file data type
-    MC_MAGIC = b'MC' #magic bit that starts a PS1 memory card
-    SC_MAGIC = b'SC'
+    MC_MAGIC = b'MC' #magic data that starts a PS1 memory card
+    SC_MAGIC = b'SC' #magic data that starts a PS1 save file
+    PMV_MAGIC = b'PMV' #magic data that starts a PSP save file
     PS1_STANDARD_MC_LEN = 128*1024 #Standard PS1 memory card is 128 KB long
     PSP_MC_LEN = 129*1024   #Length of the PSP memory card files
 
@@ -15,15 +16,18 @@ def f_identifyFile(file_data):
     if len(file_data) == PS1_STANDARD_MC_LEN:
         #PS1 memory cards have to start with "MC"
         if file_data[0x0:0x2] == MC_MAGIC:
-            None
+            file_type = 'memCard'
+
     #Basis of PSP MC detection
     elif len(file_data) == PSP_MC_LEN:
-        None
+        #PSP memcard saves have to start with "VMP"
+        if file_data[0x0:0x0C] == "PMV":
+            file_type = 'PSP'
     #Assume single save detection
     else:
         #Single saves have to start with the 'SC' magic data
         if file_data[0x0:0x2] == SC_MAGIC:
-            None
+            file_type = 'single'
 
     return file_type
 
@@ -33,7 +37,7 @@ def tester():
     retroarch_mc_data = open(RETROARCH_MC_PATH,'rb').read()
     PSX_SINGLE_SAVE_PATH = "BISLPSP02020AC3ES_MC"
     psx_single_save_data = open(PSX_SINGLE_SAVE_PATH,'rb').read()
-    print(len(retroarch_mc_data)/1024)
+    #print(len(retroarch_mc_data)/1024)
 
     #Test identifying file with data from each type of savegame.
     retroarch_mc_file_type = f_identifyFile(retroarch_mc_data)
