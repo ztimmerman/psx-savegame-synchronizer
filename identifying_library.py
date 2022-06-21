@@ -1,12 +1,12 @@
 import os
 
-class psx_memCard:
+class PSXMemCard:
     pass
 
-class psx_singleSave:
+class PSXSingleSave:
     pass
 
-class psp_memCard:
+class PSPMemCard:
     pass
 
 #Param(s):
