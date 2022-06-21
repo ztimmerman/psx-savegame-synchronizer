@@ -1,5 +1,14 @@
 import os
 
+class psx_memCard:
+    pass
+
+class psx_singleSave:
+    pass
+
+class psp_memCard:
+    pass
+
 #Param(s):
 #   file_data: binary info from the file as a single continuous 'bytes'.
 #Returns 'PSP' if identified as PSP, 'single' if identified as a single save file,
